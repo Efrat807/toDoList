@@ -57,12 +57,13 @@ export const useTask = () => {
 		UpdateTask(
 			{
 				method: 'Put',
-				path: `${TASK_QUERY_KEY}?id=${data.id}`,
+				path: `${TASK_QUERY_KEY}/${data.id}`,
 				headers: {},
 				data,
 			},
 			{
 				onSuccess: (updatedTask) => {
+					//עדכון קאש לאחר עדכון
 					updateRQCacheAfterUpdate(
 						updatedTask,
 						queryClient,
@@ -81,7 +82,7 @@ export const useTask = () => {
 		DeleteTask(
 			{
 				method: 'Delete',
-				path: `${TASK_QUERY_KEY}?id=${id}`,
+				path: `${TASK_QUERY_KEY}/${id}`,
 				headers: {},
 				data: {
 					description: '',
