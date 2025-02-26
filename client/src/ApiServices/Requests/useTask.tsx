@@ -57,7 +57,7 @@ export const useTask = () => {
 		UpdateTask(
 			{
 				method: 'Put',
-				path: `${TASK_QUERY_KEY}?id=${data.ID}`,
+				path: `${TASK_QUERY_KEY}?id=${data.id}`,
 				headers: {},
 				data,
 			},
@@ -84,8 +84,8 @@ export const useTask = () => {
 				path: `${TASK_QUERY_KEY}?id=${id}`,
 				headers: {},
 				data: {
-					Description: '',
-					IsCompleted: false,
+					description: '',
+					isCompleted: false,
 				},
 			},
 			{

@@ -21,7 +21,15 @@ namespace server.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<TaskModal>> Get()
         {
-            return _context.Tasks.ToList();
+            try
+            {
+                return _context.Tasks.ToList();
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+           
         }
 
         [HttpGet("{id}")]
@@ -37,9 +45,17 @@ namespace server.Controllers
         [HttpPost]
         public ActionResult<TaskModal> Post([FromBody] TaskModal task)
         {
-            _context.Tasks.Add(task);
-            _context.SaveChanges();
-            return CreatedAtAction(nameof(Get), new { id = task.ID }, task);
+            try
+            {
+                _context.Tasks.Add(task);
+                _context.SaveChanges();
+                return CreatedAtAction(nameof(Get), new { id = task.ID }, task);
+            } 
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+            
         }
 
         [HttpPut("{id}")]
