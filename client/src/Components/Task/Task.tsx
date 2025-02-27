@@ -43,7 +43,6 @@ const Task = ({ task }: { task: ITask }) => {
 					)}
 					<ClearIcon
 						className={`${classes.icon} ${classes.clearIcon}`}
-						style={{ cursor: 'pointer', marginRight: '10px' }}
 						onClick={() => task.id && deleteTask(task.id)}
 					/>
 				</div>
