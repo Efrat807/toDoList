@@ -14,6 +14,11 @@
     }
 
     .icons {
-
+        .icon {
+            cursor: pointer;
+        }
+        .clearIcon {
+            margin-right: 10px;
+        }
     }
 }

@@ -1,5 +1,6 @@
 .listContainer {
     direction: rtl;
+    width: 100%;
 
     .backgroundImg {
         z-index: 0;
@@ -10,7 +11,14 @@
     .addTaskContainer {
         display: flex;
         gap: 5px;
-        margin-bottom: 15px;
+        margin-bottom: 25px;
+        margin-inline: auto;
+        justify-content: center;
+        width: 100%;
+
+        .descriptionInput {
+            width: 400px;
+        }
 
         .addBtn {
             width: 150px;

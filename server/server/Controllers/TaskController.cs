@@ -5,9 +5,6 @@ using Repository.Models;
 
 namespace server.Controllers
 {
-
-
-
     [Route("api/[controller]")]
     [ApiController]
     public class TaskController : ControllerBase
@@ -31,16 +28,6 @@ namespace server.Controllers
                 return BadRequest(e.Message);
             }
            
-        }
-
-        [HttpGet("{id}")]
-        public ActionResult<TaskModal> Get(int id)
-        {
-            var task = _context.Tasks.Find(id);
-            if (task == null)
-                return NotFound();
-
-            return task;
         }
 
         [HttpPost]
