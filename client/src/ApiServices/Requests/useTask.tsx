@@ -1,9 +1,10 @@
-import { QueryOptions, useMutation, UseMutationOptions, useQuery } from "@tanstack/react-query";
-import { ITask } from "../Interfaces/ITask";
-import apiClient from "../http-common";
-import { IMutation, queryClient } from "../../Utils/ReactQueryConfig";
-import { updateRQCacheAfterCreate, updateRQCacheAfterUpdate } from "../../Common/CommonFunctions";
-import { TASK_QUERY_KEY } from "./QueryKeys";
+import { QueryOptions, useMutation, UseMutationOptions, useQuery } from '@tanstack/react-query';
+import { ITask } from '../Interfaces/ITask';
+import apiClient from '../http-common';
+import { IMutation, queryClient } from '../../Utils/ReactQueryConfig';
+import { updateRQCacheAfterCreate, updateRQCacheAfterUpdate } from '../../Common/CommonFunctions';
+import { TASK_QUERY_KEY } from './QueryKeys';
+import { toast } from 'react-toastify';
 
 export const useGetAllTasks = (options?: QueryOptions<ITask[]>) => {
 	const { data: tasks, ...queryInfo } = useQuery<ITask[]>({
@@ -18,74 +19,56 @@ export const useGetAllTasks = (options?: QueryOptions<ITask[]>) => {
 };
 
 export const useTask = () => {
-	const { mutate: UpdateTask, ...updateMutateInfo } = useMutation<
-		ITask,
-		unknown,
-		IMutation<ITask>
-	>({});
-	const { mutate: CreateTask, ...createMutateInfo } = useMutation<
-		ITask,
-		unknown,
-		IMutation<ITask>
-	>({});
+	const { mutate: CreateTask, ...createMutateInfo } = useMutation<ITask, Error, IMutation<ITask>>({});
+	
+	const { mutate: UpdateTask, ...updateMutateInfo } = useMutation<ITask, Error, IMutation<ITask>>({});
 
-	const { mutate: DeleteTask, ...deleteMutateInfo } = useMutation<
-		ITask,
-		unknown,
-		IMutation<ITask>
-	>({});
+	const { mutate: DeleteTask, ...deleteMutateInfo } = useMutation<ITask, Error, IMutation<ITask>>({});
 
-	const createTask = (
-		data: ITask,
-		options?: UseMutationOptions<ITask, unknown, IMutation<ITask>>
-	) => {
+	const createTask = (data: ITask, options?: UseMutationOptions<ITask, unknown, IMutation<ITask>>) => {
 		CreateTask(
 			{ method: 'Post', path: `${TASK_QUERY_KEY}`, headers: {}, data },
 			{
 				onSuccess: (createdTask: ITask) => {
 					updateRQCacheAfterCreate(createdTask, queryClient, TASK_QUERY_KEY);
 				},
-				...options,
-			}
-		);
-	};
-
-	const updateTask = (
-		data: ITask,
-		options?: UseMutationOptions<ITask, unknown, IMutation<ITask>>
-	) => {
-		UpdateTask(
-			{
-				method: 'Put',
-				path: `${TASK_QUERY_KEY}?id=${data.ID}`,
-				headers: {},
-				data,
-			},
-			{
-				onSuccess: (updatedTask) => {
-					updateRQCacheAfterUpdate(
-						updatedTask,
-						queryClient,
-						`${TASK_QUERY_KEY}`
-					);
+				onError: (error) => {
+					toast.error(error.message);
 				},
 				...options,
 			}
 		);
 	};
 
-	const deleteTask = (
-		id: number,
-		options?: UseMutationOptions<unknown, unknown, IMutation<Partial<ITask>>>
-	) => {
+	const updateTask = (data: ITask, options?: UseMutationOptions<ITask, unknown, IMutation<ITask>>) => {
+		UpdateTask(
+			{
+				method: 'Put',
+				path: `${TASK_QUERY_KEY}/${data.id}`,
+				headers: {},
+				data,
+			},
+			{
+				onSuccess: (updatedTask) => {
+					updateRQCacheAfterUpdate(updatedTask, queryClient, `${TASK_QUERY_KEY}`);
+				},
+				onError: (error) => {
+					toast.error(error.message);
+				},
+				...options,
+			}
+		);
+	};
+
+	const deleteTask = (id: number, options?: UseMutationOptions<unknown, unknown, IMutation<Partial<ITask>>>) => {
 		DeleteTask(
 			{
 				method: 'Delete',
-				path: `${TASK_QUERY_KEY}?id=${id}`,
+				path: `${TASK_QUERY_KEY}/${id}`,
 				headers: {},
 				data: {
-					Description: '',
-					IsCompleted: false,
+					description: '',
+					isCompleted: false,
 				},
 			},
 			{
@@ -93,6 +76,9 @@ export const useTask = () => {
 					console.log(`user in id: ${id} was deleted`);
 
 					queryClient.invalidateQueries({ queryKey: [TASK_QUERY_KEY] });
+				},
+				onError: (error) => {
+					toast.error(error.message);
 				},
 				...options,
 			}

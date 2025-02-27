@@ -1,0 +1,24 @@
+
+
+.taskLine {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgb(239, 228, 173);
+    padding: 5px;
+    margin-bottom: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+
+    .taskDescription {
+        display: flex;
+    }
+
+    .icons {
+        .icon {
+            cursor: pointer;
+        }
+        .clearIcon {
+            margin-right: 10px;
+        }
+    }
+}

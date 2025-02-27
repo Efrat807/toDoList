@@ -1,0 +1,28 @@
+.listContainer {
+    direction: rtl;
+    width: 100%;
+
+    .backgroundImg {
+        z-index: 0;
+        width: 100%;
+        height: 300px;
+    }
+
+    .addTaskContainer {
+        display: flex;
+        gap: 5px;
+        margin-bottom: 25px;
+        margin-inline: auto;
+        justify-content: center;
+        width: 100%;
+
+        .descriptionInput {
+            width: 400px;
+        }
+
+        .addBtn {
+            width: 150px;
+            
+        }
+    }
+}

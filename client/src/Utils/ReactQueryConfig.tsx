@@ -44,7 +44,6 @@ export const queryClient = new QueryClient({
 			retry: 3,
 			retryDelay: 1000,
 			staleTime: 1 * Minute,
-			// cacheTime: 24 * 60 * Minute,
 		},
 		mutations:  {mutationFn: mutateFunction} ,
 	},

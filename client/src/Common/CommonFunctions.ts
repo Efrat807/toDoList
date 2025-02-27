@@ -19,7 +19,7 @@ export const updateRQCacheAfterUpdate = (
 
 		return Array.isArray(oldData)
 			? oldData?.map((data: any) =>
-					data.userId === UpdatedData.userId ? UpdatedData : data
+					data.id === UpdatedData.id ? UpdatedData : data
 			  )
 			: UpdatedData;
 	});
